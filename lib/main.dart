@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:dealsdray/otpVerify.dart';
+import 'package:dealsdray/service/respAPI.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:http/http.dart';
 
 void main() {
   runApp(const MyApp());
@@ -46,14 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
   var _phoneNumber;
 
   void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+    setState(() {});
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -69,8 +66,16 @@ class _MyHomePageState extends State<MyHomePage> {
               opacity: 0.5,
               child: Align(
                 alignment: AlignmentDirectional(0, 0),
-                child: Image(
-                  image: AssetImage('assets/images/logo.png'),
+                child: Opacity(
+                  opacity: .5,
+                  child: SizedBox(
+                    height: 200,
+                    child: Image(
+                      image: AssetImage(
+                        'assets/images/logo.png',
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -91,7 +96,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Text('Hey good to see you'),
+                    const Text(
+                      'Hey good to see you!',
+                      style:
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    ),
                     const Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
                       child: Text(
@@ -110,9 +119,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                   hintText: "enter the phone number"),
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return 'Please enter your name.'; // Return an error message if the name is empty
+                                  return 'Please enter your name.';
                                 }
-                                return null; // Return null if the name is valid
+                                return null;
                               },
                               onSaved: (value) {
                                 _phoneNumber = value!; // Save the entered name
@@ -120,11 +129,14 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                             const SizedBox(height: 20.0),
                             ElevatedButton(
-                              onPressed: () {
+                              onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
                                   _formKey.currentState!
                                       .save(); // Save the form data
                                   print(_phoneNumber);
+                                  if (await login(_phoneNumber)) {
+                                    _navigateToNextPage();
+                                  }
                                   _navigateToNextPage(); // Print the entered name
                                 } else {
                                   print('Please fill in the required fields');
@@ -153,7 +165,8 @@ class _MyHomePageState extends State<MyHomePage> {
   void _navigateToNextPage() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => Otpverify()),
+      MaterialPageRoute(
+          builder: (context) => Otpverify(phoneNumber: _phoneNumber)),
     );
   }
 }

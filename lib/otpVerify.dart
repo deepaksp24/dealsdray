@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class Otpverify extends StatefulWidget {
-  const Otpverify({super.key});
+  var phoneNumber;
+
+  Otpverify({Key? key, required this.phoneNumber}) : super(key: key);
 
   @override
   State<Otpverify> createState() => _OtpverifyState();
@@ -36,7 +38,7 @@ class _OtpverifyState extends State<Otpverify> {
               height: 20,
             ),
             Text(
-              'We have sent a unique OTP number to your mobile +NUMBER',
+              'We have sent a unique OTP number to your mobile ${widget.phoneNumber}',
               style: TextStyle(fontSize: 15),
             ),
             Padding(
