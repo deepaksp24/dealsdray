@@ -1,3 +1,4 @@
+import 'package:dealsdray/otpVerify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -106,10 +107,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           children: <Widget>[
                             TextFormField(
                               decoration: const InputDecoration(
-                                  labelText:
-                                      'Name'), // Label for the name field
+                                  hintText: "enter the phone number"),
                               validator: (value) {
-                                // Validation function for the name field
                                 if (value!.isEmpty) {
                                   return 'Please enter your name.'; // Return an error message if the name is empty
                                 }
@@ -126,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   _formKey.currentState!
                                       .save(); // Save the form data
                                   print(_phoneNumber);
-                                  //_navigateToNextPage(); // Print the entered name
+                                  _navigateToNextPage(); // Print the entered name
                                 } else {
                                   print('Please fill in the required fields');
                                 }
@@ -149,5 +148,12 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ));
+  }
+
+  void _navigateToNextPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Otpverify()),
+    );
   }
 }
