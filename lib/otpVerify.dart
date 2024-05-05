@@ -1,3 +1,4 @@
+import 'package:dealsdray/registration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -42,7 +43,7 @@ class _OtpverifyState extends State<Otpverify> {
               style: TextStyle(fontSize: 15),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0.0, 0, 0.0, 0.0),
+              padding: const EdgeInsets.fromLTRB(0.0, 0, 30.0, 0.0),
               child: Form(
                   child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -134,15 +135,32 @@ class _OtpverifyState extends State<Otpverify> {
                 ],
               )),
             ),
+            SizedBox(
+              height: 20,
+            ),
             Center(
                 child: ElevatedButton(
-              onPressed: () {},
-              child: Text("verify"),
+              onPressed: () {
+                _navigateToNextPage();
+                if (true) {}
+              },
+              child: Text(
+                "verify",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
               style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
             ))
           ],
         ),
       ),
+    );
+  }
+
+  void _navigateToNextPage() {
+    print("route");
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => register()),
     );
   }
 }
